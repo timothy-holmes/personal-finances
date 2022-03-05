@@ -1,9 +1,9 @@
 from api import application
-from api.extract_transform import RequestHandler
+from data import DataManager
 
-print('name from endpoints.py',__name__)
+data_handler = DataManager()
 
 @application.route('/')
 @application.route('/index')
 def index():
-    return "Hello, World!"
+    return data_handler.dfs['df_acc'].to_html()

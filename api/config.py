@@ -1,16 +1,27 @@
 class Config():
     def __init__(self):
-        self.d = {}
-        with open('../token.secret','r') as f:
+        self.d = {'DEBUG': True}
+
+        # token
+        with open('C:/GitHub/personal-finances/api/token.secret','r') as f:
             self.d['SECRET_TOKEN'] = f.read()
+        
+        # api info
         self.d['BASE_PATH'] = 'https://api.up.com.au/api/v1'
         self.d['API_MAP'] = {
-            '_acc': {'path': '/accounts'},
-            '_trans': {'path': '/transactions'},
-            '_cat': {'path': '/categories'},
-            '_tag': {'path': '/tags'},
-            '_webh': {'path': '/webhooks'}
+            'acc': {'path': '/accounts'},
+            'trans': {'path': '/transactions'},
+            'cat': {'path': '/categories'},
+            'tag': {'path': '/tags'},
+            'webh': {'path': '/webhooks'}
         }
+
+        # app settings
+        if self.d['DEBUG']:
+            self.d['MAX_REQUESTS'] = 2
+        else:
+            self.d['MAX_REQUESTS'] = 100
+        
         self.d['CSV_PATH'] = 'data.csv.secret'
 
 if __name__ == '__main__':

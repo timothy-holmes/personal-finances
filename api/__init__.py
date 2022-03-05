@@ -1,5 +1,5 @@
 from flask import Flask
-from api.data import DataManager
+from data import DataManager
 
 application = Flask(__name__)
 
