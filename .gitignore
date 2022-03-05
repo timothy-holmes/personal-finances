@@ -130,3 +130,6 @@ dmypy.json
 
 # Reference docs for requests and curl
 /api-references
+
+# Secret files
+.secret
