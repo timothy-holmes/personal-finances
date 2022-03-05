@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{RXBc:function(e,t,n){"use strict";n.r(t);var a=n("q1tI"),r=n("7oih"),c=n("vrFN");t.default=function(){return a.createElement(a.Fragment,null,a.createElement(c.a,{title:"Up API"}),a.createElement(r.a,null))}}}]);

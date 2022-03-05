@@ -18,16 +18,13 @@ stories = [
     'priority': '1-MVP'}
 ]
 
-class InformationRequest():
-    # pass data to analysis engine
-    def __init__(self,config):
-        self.config = config
-        # open information file
-        current, date, self.information = self.load_information(config['INFORMATION_PATH'])
-        if not current:
-            self.information = self.update_information(date)
-
-
+stages = {
+    'step 1': [
+        ''
+        'dashboard that shows: balances, transactions, spending history, balance history'],
+    2: ['dashboard has slider for dates'],
+    3: ['dashboard has filters for person/category/reason']
+}
 
 
 if __name__ == '__main__':
