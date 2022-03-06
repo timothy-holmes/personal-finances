@@ -22,7 +22,7 @@ class DataManager():
                 self.dfs['df_' + x] = self.pull_data(x)
                 #pd.write_csv('PERSISTENT_DATA_ACC')
                 #except:
-                print('Error loading data')
+                #print('Error loading data')
 
     def pull_data(self,map_field): # --> pandas.DataFrame
         if not self.requestor: self.requestor = RequestHandler()
@@ -32,6 +32,7 @@ class DataManager():
         headers = None
         params = None
         # request
-        data = requestor.get_data(path,headers,params)
+        data = self.requestor.get_data(path,headers)
         df = pd.json_normalize(data)
+        print(map_field,list(df.columns))
         return df

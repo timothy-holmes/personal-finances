@@ -10,23 +10,15 @@ class RequestHandler():
 
     def verify_token_validity(self): # --> bool
         #verify token validity
-        check_token_response = self.get('/util/ping',None)
+        check_token_response = self.get(path='/util/ping',headers=None)
         good_token = self.handle_response_status(check_token_response)
         return good_token
 
     def get(self,path,headers): # --> requests.Reponse
-        # if headers == None: headers = {}
+        if headers == None: headers = {}
         path = self.config.d['BASE_PATH'] + path
-        # headers.update(self.token_header)
-        # response = rq.get(path,headers)
-        # return response
-
-        payload=None
-        headers = self.token_header
-
-        response = rq.get(path,headers=headers,
-        )
-        print(response.text)
+        headers.update(self.token_header)
+        response = rq.get(path,headers=headers)
         return response
 
     def get_data(self,path,headers): # --> list/dict (JSON) 
@@ -37,17 +29,18 @@ class RequestHandler():
             response = self.get(path=path, headers=headers)
             good_request = self.handle_response_status(response)
             if good_request:
-                data = response.json().get('data',{})
-                next_path = data.get('links',{}).get('next',{})
+                response_json = response.json()
+                data = response_json.get('data',{})
+                next_path = response_json.get('links',{}).get('next',{})
                 if type(data) == list:
                     datas += data
-            if len(next_path) == 0: break
+            if next_path == None: break
         return datas
 
     @staticmethod
-    def handle_response_status(response): # --> int
+    def handle_response_status(response): # --> bool
         # unfinished
-        def is_good():
+        def is_good(status):
             return True
         def lol(status):
             print('lol',status)

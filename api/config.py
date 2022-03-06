@@ -20,8 +20,7 @@ class Config():
         if self.d['DEBUG']:
             self.d['MAX_REQUESTS'] = 2
         else:
-            self.d['MAX_REQUESTS'] = 100
-        
+            self.d['MAX_REQUESTS'] = 100        
         self.d['CSV_PATH'] = 'data.csv.secret'
 
 if __name__ == '__main__':
