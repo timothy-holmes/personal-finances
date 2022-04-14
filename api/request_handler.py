@@ -4,7 +4,7 @@ from api.config import Config # contains secret key
 class RequestHandler():
     def __init__(self):
         self.config = Config()
-        token = self.config.d['SECRET_TOKEN']
+        token = self.config.d['SECRET_TOKEN']['Tim']
         self.token_header = {'Authorization': 'Bearer {token}'.format(token=token)}
         assert self.verify_token_validity()
 
@@ -16,22 +16,25 @@ class RequestHandler():
 
     def get(self,path,headers): # --> requests.Reponse
         if headers == None: headers = {}
-        path = self.config.d['BASE_PATH'] + path
+        if not self.config.d['BASE_PATH'] in path:
+            path = self.config.d['BASE_PATH'] + path
+            print(path)
         headers.update(self.token_header)
         response = rq.get(path,headers=headers)
         return response
 
     def get_data(self,path,headers): # --> list/dict (JSON) 
-        next_path = ''
+        next_path = path
         datas = []
         max_requests = self.config.d['MAX_REQUESTS']
         for x in range(max_requests): #
-            response = self.get(path=path, headers=headers)
+            response = self.get(path=next_path, headers=headers)
+            print(x,next_path,response)
             good_request = self.handle_response_status(response)
             if good_request:
                 response_json = response.json()
                 data = response_json.get('data',{})
-                next_path = response_json.get('links',{}).get('next',{})
+                next_path = response_json.get('links',{}).get('next',None)
                 if type(data) == list:
                     datas += data
             if next_path == None: break

@@ -1,11 +1,11 @@
 class Config():
     def __init__(self):
-        self.d = {'DEBUG': True}
+        self.d = {'DEBUG': False}
 
         # token
         with open('C:/GitHub/personal-finances/api/token.secret','r') as f:
-            self.d['SECRET_TOKEN'] = f.read()
-        
+            self.d['SECRET_TOKEN'] = {v.split()[0]: v.split()[1] for v in f.read().splitlines()}
+
         # api info
         self.d['BASE_PATH'] = 'https://api.up.com.au/api/v1'
         self.d['API_MAP'] = {
@@ -20,7 +20,7 @@ class Config():
         if self.d['DEBUG']:
             self.d['MAX_REQUESTS'] = 2
         else:
-            self.d['MAX_REQUESTS'] = 100        
+            self.d['MAX_REQUESTS'] = 100      
         self.d['CSV_PATH'] = 'data.csv.secret'
 
 if __name__ == '__main__':
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     config = Config()
     path = config.d['BASE_PATH'] + '/transactions'
     headers = {
-        'Authorization': ' '.join(['Bearer',config.d['SECRET_TOKEN']])
+        'Authorization': ' '.join(['Bearer',config.d['SECRET_TOKEN']['Tim']])
     }
     params = {
         'page[size]': 1
